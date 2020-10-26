@@ -22,3 +22,7 @@ diag(cov(oliveOil[,3:10]))
 olive1 <- prcomp(oliveOil[,3:10], scale = TRUE)
 summary(olive1)
 diag(cov(oliveOil[,3:10]))
+olive_var_explain <- (olive1$sdev^2) / (sum(olive1$sdev^2))
+plot(olive_var_explain, type = "b", main = "Olive Oil Data",
+xlab = "No. of components", ylab = "Proportion of variance explained", xaxt = "n")
+axis(1, at = 3:10)
