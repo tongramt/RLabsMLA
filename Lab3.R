@@ -30,3 +30,7 @@ olive_var_explain <- (olive1$sdev^2) / (sum(olive1$sdev^2))
 plot(olive_var_explain, type = "b", main = "Olive Oil Data",
 xlab = "No. of components", ylab = "Proportion of variance explained", xaxt = "n", col = "blue")
 axis(1, at = 3:10)
+# Exercise for Jack
+newiris <- predict(fisher1)
+head(newiris, n = 10)
+round(fisher1$rotation, 10)
