@@ -1,5 +1,6 @@
-# Title     : TODO
-# Objective : TODO
+# Title     : Lab 4
+# Objective : Write code for various dissimilarity computation methods
+# and linkage methods for hierarchical clustering
 # Created by: ThomasGrant
 # Created on: 29/10/2020
 
@@ -65,6 +66,7 @@ acid_mean <- apply(Acids, 2, mean)
 acid_mean
 # Use the sweep function to standardise the Acids database
 standard_acids <- sweep(Acids, 2, acid_sd, "/")
+standard_acids_mean <- sweep(Acids, 2, acid_mean, "-")
 # Perform cluster analysis of the standardised Acid daa
 standard_acids_dis <- dist(standard_acids, method="manhattan")
 standard_Acids_Clust <- hclust(standard_acids_dis, method = "average")
@@ -77,8 +79,8 @@ acids_label3 <- cutree(standard_Acids_Clust, h=h_cut_off2)
 pairs(standard_acids, col = acids_label3)
 # Perform Cluster analysis of old faithful data
 #?faithful
-faithful_dis <- dist(faithful, method = "euclidean")
-faithful_clust <- hclust(faithful_dis, method = "average")
+faithful_dis <- dist(faithful, method = "manhattan")
+faithful_clust <- hclust(faithful_dis, method = "complete")
 faith_mean <- mean(faithful_clust$height)
 faith_sd <- sd(faithful_clust$height)
 faith_cutOff <- faith_mean + (faith_sd*3)
