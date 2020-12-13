@@ -10,6 +10,7 @@ OliveOil <- read.csv('https://www.scss.tcd.ie/~arwhite/Teaching/STU33011/olive.c
 head(OliveOil, n=10)
 # Check how many entries there are for the olive oil dataset
 dim(OliveOil)
+head(OliveOil, n=6)
 # Exercise1 Create a matrix containing the last 8 columns of the Olive Oil dataset
 Acids <- OliveOil[,3:10]
 dim(Acids)

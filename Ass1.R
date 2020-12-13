@@ -2,6 +2,9 @@
 # Objective :
 # Created by: ThomasGrant
 # Created on: 03/12/2020
+install.packages("factoextra")
+library("factoextra")
+library('flexclust')
 heart <- read.csv("/Users/ThomasGrant/Downloads/heart_data(1).csv")
 # In the description of the data it says that the values for column 9 are between 0 and 3
 # and in the dataset they are between 1 and 4
@@ -9,35 +12,44 @@ for(i in 1:nrow(heart)){
   heart[i,9] <- heart[i,9]-1
 }
 as.integer(heart[,9])
-# Break down data into binary and non binary variables
-binary_heart <- heart[, c(2,5,7,10)]
-non_binary_heart <- heart[, c(1,3,4,6,8,10)]
-plot(non_binary_heart)
+heart <- heart[order(heart$Class),]
+
 # Analyse what components provide us with good insight into the data
-pairs(heart[,c(1:9)], col=heart[,10])
 # Using unsupervised learning methods 30%
 # 1: Principal Component Analysis
-# Run PCA on the various aspects of the data without the heart disease factor as that will be used later
-heart_full_pca <- prcomp(heart[,1:9])
-heart_real_pca <-  prcomp(non_binary_heart[,1:5])
-heart_binary_pca <- prcomp(binary_heart[,1:3])
-#Check to see the results of PCA on the broken up heart data
-summary(heart_full_pca)
-summary(heart_real_pca)
-# make usable datasets for the code going forward
-new_full_heart <- predict(heart_full_pca)
-new_real_heart <- predict(heart_real_pca)
-# plotting the PCAs
-full_pca_plot <- plot(new_full_heart[,1], new_full_heart[,2], type=, xlab="PC1", ylab="PC2", col=as.integer(heart[,10]))
-real_pca_plot <- plot(new_real_heart[,1], new_real_heart[,2], type=, xlab="PC1", ylab="PC2", col=as.integer(heart[,10]))
+head(heart, n=5)
+# Break Heart data down to real variables only
+real_heart <- heart[,c(1,3,4,6,8,9)]
+real_pca <- prcomp(real_heart, scale=TRUE)
+summary(real_pca)
 
+# Graph to show the proportion of variance explained
+eig_summary <- get_eigenvalue(real_pca)
+eig_plot <- fviz_eig(real_pca, addlabels = TRUE, ylim = c(0, 60), barcolor = "red", barfill = "red", main = "Heart Disease PCA")
+# Group pca by class
+fviz_pca_biplot(real_pca,
+                col.ind = heart$Class, palette = "jco",
+                legend.title = "Heart Disease",
+                geom.ind = "point", col.var = "red")
+
+# Cannot add ellipses. PCA shows class is afffected by dim 2
 # 2: Hierarchical Clustering
+euclid_dis <- dist(heart, method = "euclidean")
+manhattan_dis <- dist(heart, method = "manhattan")
+eucl_av_clust <- hclust(euclid_dis, method = "average")
+eucl_comp_clust <- hclust(euclid_dis, method = "complete")
+man_av_clust <-  hclust(manhattan_dis, method = "average")
+man_comp_clust <- hclust(manhattan_dis, method = "complete")
+# using these cutoffs to analyse clusts
+plot(eucl_av_clust)
+plot(eucl_comp_clust)
+plot(man_av_clust)
+plot(man_comp_clust)
+
 # Using supervised learning Methods
-# K-Nearest Neighbours
-# LDA
-# QDA
-# K-Means Testing
-plot(pairs(heart[,1:9]))
-binary_heart <- heart[, c(2,5,7,10)]
-non_binary_heart <- heart[, c(1,3,4,6,8,9,10)]
-plot(pairs(non_binary_heart))
+# 1. K-Nearest Neighbours
+
+# 2. LDA
+# 3. QDA
+# 4. K-Means Testing
+
