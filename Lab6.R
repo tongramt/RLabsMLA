@@ -44,7 +44,7 @@ ntest <- nrow(test) # number of rows in test
 k_summary <- cbind(k, p)
 colnames(k_summary) <- c("k","% misclassified")
 for(i in 1:kmax){
-result <- knn(train, test, cl = simT[index_valid, 3], k = i)
+result <- knn(train, test, cl = simT[index_test, 3], k = i)
 class_agree <- table(result, simT[index_test,3])
 sum_agree <- sum(diag(class_agree))
 k_summary[i, 2] <- (ntest - sum_agree) / ntest

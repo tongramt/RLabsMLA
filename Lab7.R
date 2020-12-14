@@ -4,9 +4,9 @@
 # Created on: 02/12/2020
 require("MASS")
 library("MASS")
-salmon.data <- read.table("https://www.scss.tcd.ie/~arwhite/Teaching/STU33011/salmon.txt")
-head(salmon.data, h=10)
-plot(salmon.data[,-1], col = as.factor(salmon.data[,1]))
+salmon <- read.table("https://www.scss.tcd.ie/~arwhite/Teaching/STU33011/salmon.txt")
+head(salmon, h=10)
+plot(salmon[,-1], col = as.factor(salmon.data[,1]))
 install.packages("ellipse")
 library("ellipse")
 plot(salmon[,c(2,3)], col = as.factor(salmon[, 1]), xlim=c(50,190), ylim=c(290,530))
