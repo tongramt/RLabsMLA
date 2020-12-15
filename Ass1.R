@@ -123,7 +123,7 @@ k_summary[i, 2] <- (ntest - sum_agree) / ntest
 }
 k_summary[1:25, ]
 plot(k_summary, type="b", col = "blue")
-which.min(k_summary[,2])
+(k_summary[66,2])
 
 
 
