@@ -2,7 +2,7 @@
 # Objective :
 # Created by: ThomasGrant
 # Created on: 03/12/2020
-install.packages("factoextra")
+# install.packages("factoextra")
 library("factoextra")
 library('flexclust')
 library("MASS")
